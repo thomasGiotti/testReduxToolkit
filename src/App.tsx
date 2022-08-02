@@ -1,22 +1,17 @@
 import styled from '@emotion/styled';
-import { Delete } from '@mui/icons-material';
 import {
   Container,
   Typography,
   TextField,
   Button,
   List,
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
-  IconButton,
-  Checkbox,
   Box,
 } from '@mui/material';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import TodoItem from './components/TodoItem';
 import { AppDispatch, RootState } from './redux/store';
-import { addTodo, removeTodo, setTodoStatus } from './redux/todoSlice';
+import { addTodo } from './redux/todoSlice';
 
 const BoxContainer = styled(Box)`
   display: flex;
@@ -80,37 +75,7 @@ const App = () => {
 
       <List>
         {todoList.map((todo) => (
-          <ListItem key={todo.id}>
-            <ListItemText
-              style={{
-                textDecoration: todo.completed ? 'line-through' : 'none',
-              }}
-            >
-              <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-                {todo.title}
-              </Typography>
-              <Typography variant="subtitle2">{todo.description}</Typography>
-            </ListItemText>
-
-            <ListItemSecondaryAction>
-              <IconButton
-                onClick={() => {
-                  dispatch(removeTodo(todo.id));
-                }}
-              >
-                <Delete />
-              </IconButton>
-              <Checkbox
-                edge="end"
-                value={todo.completed}
-                onChange={() => {
-                  dispatch(
-                    setTodoStatus({ completed: !todo.completed, id: todo.id })
-                  );
-                }}
-              />
-            </ListItemSecondaryAction>
-          </ListItem>
+          <TodoItem key={todo.id} todo={todo} />
         ))}
       </List>
     </Container>
